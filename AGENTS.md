@@ -1,5 +1,5 @@
-<!-- BB-AGENT-CONTRACT v1.8 -- managed block. Edit the template, not the copies. -->
-# Agent Workflow Contract | Bainbridge Builders | v1.8 | 2026-10-06 | BB
+<!-- BB-AGENT-CONTRACT v1.9 -- managed block. Edit the template, not the copies. -->
+# Agent Workflow Contract | Bainbridge Builders | v1.9 | 2026-10-06 | BB
 
 **Every agent working in this repo follows this file — Claude Code, Devin (cloud
 AND desktop), Codex, and any future one.** It is deliberately IN THE REPO and
@@ -43,11 +43,16 @@ only for:
 - **payroll or QuickBooks posting**: anything that changes what is paid, or what
   is written to QuickBooks / QB Time;
 - **running a migration against production**: writing the migration file is
-  yours; applying it to the prod database is Sam's. A PR that adds a BMB
-  migration (`migrations/run-NNN-*.mjs`) cannot be armed until it has run:
-  stage it for Sam, then confirm it in `schema_migrations` and arm with
-  `landed --arm --migration-applied <sha8,…>`. Until then the PR is parked on
-  Sam, not stuck — say so.
+  yours; applying it to the prod database is Sam's. Find out how this repo runs
+  its migrations before you arm:
+  - **run by hand** (BMB: `migrations/run-NNN-*.mjs`): the PR cannot be armed
+    until it has run — stage it for Sam, then confirm it in `schema_migrations`
+    and arm with `landed --arm --migration-applied <sha8,…>`;
+  - **run by the app itself on deploy or boot** (ControlTower: the BFF applies
+    every new `bff/migrations/*.sql` at startup): **merging IS running it** — do
+    not arm; Sam merges that PR. `landed --arm` refuses both kinds.
+
+  Until then the PR is parked on Sam, not stuck — say so.
 
 If you are unsure whether a change pays people, posts to QuickBooks, or runs on
 the production database, it does. Ask.
